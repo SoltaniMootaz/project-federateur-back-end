@@ -7,7 +7,8 @@ class user implements IUser {
     public password: string,
     public fullName: string,
     public phoneNumber: string,
-    public companyId: number
+    public companyId: number,
+    public role?: string
   ) {}
 }
 export default user;

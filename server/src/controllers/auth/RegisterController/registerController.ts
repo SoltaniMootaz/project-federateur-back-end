@@ -14,7 +14,8 @@ export class RegisterController {
       isEmpty(user.email) ||
       isEmpty(user.password) ||
       isEmpty(user.fullName) ||
-      isEmpty(user.phoneNumber)
+      isEmpty(user.phoneNumber) ||
+      isEmpty(user.role)
     ) {
       res.status(400).json({ error: "All fields are required" });
       return;

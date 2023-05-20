@@ -5,6 +5,7 @@ interface IUser {
   fullName: string;
   phoneNumber: string;
   companyId: number;
+  role?: string;
 }
 
 export default IUser;
