@@ -1,0 +1,1 @@
+{"version":3,"file":"deleteProjectUseCase.js","sourceRoot":"","sources":["../../../src/use-cases/project/deleteProjectUseCase.ts"],"names":[],"mappings":"AAGA,MAAM,OAAO,oBAAoB;IAC/B,YAAoB,iBAAoC;QAApC,sBAAiB,GAAjB,iBAAiB,CAAmB;IAAG,CAAC;IAE5D,KAAK,CAAC,MAAM,CAAC,SAAiB;QAC5B,OAAO,MAAM,IAAI,CAAC,iBAAiB,CAAC,aAAa,CAAC,SAAS,CAAC,CAAC;IAC/D,CAAC;CACF"}

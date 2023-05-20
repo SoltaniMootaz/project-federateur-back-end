@@ -50,6 +50,7 @@ export class UserRepository {
                   companyId: userInfo.companyId,
                   companyName: userInfo.name,
                   companyDomain: userInfo.domain,
+                  role: userInfo.role,
                   projects: projects,
                 };
 

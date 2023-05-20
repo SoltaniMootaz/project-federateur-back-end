@@ -4,9 +4,12 @@ export class LoginUseCase {
         this.authRepository = userRepository;
     }
     async login(email, password) {
-        console.log("here");
         const user = await this.authRepository.getUserByEmail(email);
-        if (user && (await bcrypt.compare(password, user.password))) {
+        if (!user) {
+            return null;
+        }
+        const isPasswordValid = await bcrypt.compare(password.trim(), user.password);
+        if (isPasswordValid) {
             return user;
         }
         return null;

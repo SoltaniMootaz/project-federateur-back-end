@@ -3,17 +3,28 @@ import { AuthRepository } from "../../repositories/authRepository.js";
 import bcrypt from "bcrypt";
 
 export class LoginUseCase {
-  public authRepository: AuthRepository;
+  private authRepository: AuthRepository;
+
   constructor(userRepository: AuthRepository) {
     this.authRepository = userRepository;
   }
 
   async login(email: string, password: string): Promise<User | null> {
-    console.log("here");
     const user = await this.authRepository.getUserByEmail(email);
-    if (user && (await bcrypt.compare(password, user.password))) {
+
+    if (!user) {
+      return null;
+    }
+
+    const isPasswordValid = await bcrypt.compare(
+      password.trim(),
+      user.password
+    );
+
+    if (isPasswordValid) {
       return user;
     }
+
     return null;
   }
 }

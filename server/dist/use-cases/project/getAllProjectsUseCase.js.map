@@ -1,0 +1,1 @@
+{"version":3,"file":"getAllProjectsUseCase.js","sourceRoot":"","sources":["../../../src/use-cases/project/getAllProjectsUseCase.ts"],"names":[],"mappings":"AAGA,MAAM,OAAO,qBAAqB;IAChC,YAAoB,iBAAoC;QAApC,sBAAiB,GAAjB,iBAAiB,CAAmB;IAAG,CAAC;IAE5D,KAAK,CAAC,OAAO;QACX,MAAM,QAAQ,GAAG,MAAM,IAAI,CAAC,iBAAiB,CAAC,cAAc,EAAE,CAAC;QAC/D,OAAO,QAAQ,CAAC;IAClB,CAAC;CACF"}

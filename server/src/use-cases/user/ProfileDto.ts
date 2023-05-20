@@ -20,6 +20,7 @@ export class ProfileDto implements IProfileDto {
   public companyId: number;
   public companyName: string;
   public companyDomain: string;
+  public role: string;
   public projects: Project[];
 
   constructor(
@@ -31,6 +32,7 @@ export class ProfileDto implements IProfileDto {
     companyId: number,
     companyName: string,
     companyDomain: string,
+    role: string,
     projects: Project[]
   ) {
     this.userId = userId;
@@ -40,6 +42,7 @@ export class ProfileDto implements IProfileDto {
     this.phoneNumber = phoneNumber;
     this.companyId = companyId;
     this.companyName = companyName;
+    this.role = role;
     this.companyDomain = companyDomain;
     this.projects = projects;
   }
