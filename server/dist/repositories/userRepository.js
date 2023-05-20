@@ -27,7 +27,6 @@ export class UserRepository {
                 }
                 else {
                     const userInfo = infoResults[0];
-                    console.log(userInfo);
                     dbConnection.query(projectsQuery, [userId], (error, projectsResults) => {
                         if (error) {
                             reject(error);

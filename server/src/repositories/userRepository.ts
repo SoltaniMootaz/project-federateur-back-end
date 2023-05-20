@@ -27,7 +27,6 @@ export class UserRepository {
           reject(new Error("User not found"));
         } else {
           const userInfo = infoResults[0];
-          console.log(userInfo);
 
           dbConnection.query(
             projectsQuery,
