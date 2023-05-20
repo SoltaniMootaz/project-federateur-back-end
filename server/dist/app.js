@@ -7,7 +7,7 @@ import companyRoutes from "./routes/companyRoutes.js";
 const app = express();
 app.use(cors());
 app.use(cors({
-    origin: "http://localhost",
+    origin: "http://localhost:4200",
 }));
 app.use(bodyParser.json());
 app.use("/user", userRoutes);

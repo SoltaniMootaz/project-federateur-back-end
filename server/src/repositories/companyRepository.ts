@@ -15,7 +15,7 @@ export class CompanyRepository {
         if (error) {
           reject(error);
         } else if (infoResults.length === 0) {
-          reject(new Error("User not found"));
+          reject(new Error("Company not found"));
         } else {
           const companyInfo = infoResults[0];
           resolve(companyInfo);
@@ -34,7 +34,7 @@ export class CompanyRepository {
         if (error) {
           reject(error);
         } else if (infoResults.length === 0) {
-          reject(new Error("User not found"));
+          reject(new Error("Companies not found"));
         } else {
           const companies = infoResults[0];
           resolve(companies);

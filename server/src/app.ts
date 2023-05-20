@@ -8,7 +8,7 @@ const app: express.Application = express();
 app.use(cors());
 app.use(
   cors({
-    origin: "http://localhost",
+    origin: "http://localhost:4200",
   })
 );
 app.use(bodyParser.json());
