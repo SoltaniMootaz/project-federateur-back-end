@@ -75,7 +75,7 @@ export class ProjectRepository {
         } else if (infoResults.length === 0) {
           reject(new Error("Projects not found"));
         } else {
-          const projects = infoResults[0];
+          const projects = infoResults;
           resolve(projects);
         }
       });

@@ -61,7 +61,7 @@ export class ProjectRepository {
                     reject(new Error("Projects not found"));
                 }
                 else {
-                    const projects = infoResults[0];
+                    const projects = infoResults;
                     resolve(projects);
                 }
             });
