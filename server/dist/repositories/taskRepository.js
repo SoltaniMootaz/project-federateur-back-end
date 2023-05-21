@@ -49,18 +49,26 @@ export class TaskRepository {
         return new Promise((resolve, reject) => {
             const updateQuery = `
       UPDATE tasks
-      SET userId = ?, projectId = ?, title = ?, description = ?, taskPoints = ?, priority = ?, type = ?, status = ?
-      WHERE taskId = ?
+      SET
+        ${task.userId !== undefined ? "userId = ?," : ""}
+        ${task.projectId !== undefined ? "projectId = ?," : ""}
+        ${task.title !== undefined ? "title = ?," : ""}
+        ${task.description !== undefined ? "description = ?," : ""}
+        ${task.taskPoints !== undefined ? "taskPoints = ?," : ""}
+        ${task.priority !== undefined ? "priority = ?," : ""}
+        ${task.type !== undefined ? "type = ?," : ""}
+        ${task.status !== undefined ? "status = ?," : ""}
+      taskId = ?
     `;
             const values = [
-                task.userId,
-                task.projectId,
-                task.title,
-                task.description,
-                task.taskPoints,
-                task.priority,
-                task.type,
-                task.status,
+                ...(task.userId !== undefined ? [task.userId] : []),
+                ...(task.projectId !== undefined ? [task.projectId] : []),
+                ...(task.title !== undefined ? [task.title] : []),
+                ...(task.description !== undefined ? [task.description] : []),
+                ...(task.taskPoints !== undefined ? [task.taskPoints] : []),
+                ...(task.priority !== undefined ? [task.priority] : []),
+                ...(task.type !== undefined ? [task.type] : []),
+                ...(task.status !== undefined ? [task.status] : []),
                 task.taskId,
             ];
             dbConnection.query(updateQuery, values, (error, results) => {
@@ -107,8 +115,27 @@ export class TaskRepository {
             });
         });
     }
+    async getTasksByProjectId(projectId) {
+        return new Promise((resolve, reject) => {
+            const selectQuery = `
+      SELECT *
+      FROM tasks
+      WHERE projectId=?
+    `;
+            dbConnection.query(selectQuery, [projectId], (error, results) => {
+                if (error) {
+                    reject(error);
+                }
+                else {
+                    const tasks = results.map((row) => new Task(row.taskId, row.userId, row.projectId, row.title, row.description, row.taskPoints, row.priority, row.type, row.status));
+                    resolve(tasks);
+                }
+            });
+        });
+    }
     async getTaskById(taskId) {
         return new Promise((resolve, reject) => {
+            console.log(taskId);
             const selectQuery = `
       SELECT *
       FROM tasks

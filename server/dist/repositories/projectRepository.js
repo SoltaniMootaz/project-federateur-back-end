@@ -24,7 +24,6 @@ export class ProjectRepository {
         });
     }
     async getTeamByProjectId(projectId) {
-        console.log(projectId);
         return new Promise((resolve, reject) => {
             const teamQuery = `
         SELECT u.*, 
@@ -43,7 +42,6 @@ export class ProjectRepository {
                     reject(error);
                 }
                 else {
-                    console.log(teamResults);
                     const users = teamResults.map((row) => new user(row.userId, row.email, row.password, row.fullName, row.phoneNumber, row.companyId, row.role));
                     resolve(users);
                 }
@@ -53,8 +51,10 @@ export class ProjectRepository {
     async getAllProjects() {
         return new Promise((resolve, reject) => {
             const infoQuery = `
-              SELECT *
-              FROM projects 
+            SELECT p.*, COUNT(pt.projectId) AS teamMembers
+            FROM projects p
+            LEFT JOIN projectteam pt ON p.projectId = pt.projectId
+            GROUP BY p.projectId;      
             `;
             dbConnection.query(infoQuery, (error, infoResults) => {
                 if (error) {
@@ -73,11 +73,17 @@ export class ProjectRepository {
     async updateProject(project) {
         return new Promise((resolve, reject) => {
             const updateQuery = `
-            UPDATE projects
-            SET name = ?, status = ?
-            WHERE projectId = ?
-            `;
-            const values = [project.name, project.status, project.projectId];
+        UPDATE projects
+        SET
+          ${project.name !== undefined ? "name = ?," : ""}
+          ${project.status !== undefined ? "status = ?," : ""}
+        WHERE projectId = ?
+      `;
+            const values = [
+                ...(project.name !== undefined ? [project.name] : []),
+                ...(project.status !== undefined ? [project.status] : []),
+                project.projectId,
+            ];
             dbConnection.query(updateQuery, values, (error, infoResults) => {
                 if (error) {
                     reject(error);

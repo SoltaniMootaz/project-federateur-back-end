@@ -23,7 +23,6 @@ export class ProjectRepository {
     });
   }
   async getTeamByProjectId(projectId: number): Promise<user[]> {
-    console.log(projectId);
     return new Promise<user[]>((resolve, reject) => {
       const teamQuery = `
         SELECT u.*, 
@@ -42,7 +41,6 @@ export class ProjectRepository {
         if (error) {
           reject(error);
         } else {
-          console.log(teamResults);
           const users = teamResults.map(
             (row) =>
               new user(
@@ -64,8 +62,10 @@ export class ProjectRepository {
   async getAllProjects(): Promise<Project[]> {
     return new Promise<Project[]>((resolve, reject) => {
       const infoQuery = `
-              SELECT *
-              FROM projects 
+            SELECT p.*, COUNT(pt.projectId) AS teamMembers
+            FROM projects p
+            LEFT JOIN projectteam pt ON p.projectId = pt.projectId
+            GROUP BY p.projectId;      
             `;
 
       dbConnection.query(infoQuery, (error, infoResults) => {
@@ -83,11 +83,18 @@ export class ProjectRepository {
   async updateProject(project: Project): Promise<Project> {
     return new Promise<Project>((resolve, reject) => {
       const updateQuery = `
-            UPDATE projects
-            SET name = ?, status = ?
-            WHERE projectId = ?
-            `;
-      const values = [project.name, project.status, project.projectId];
+        UPDATE projects
+        SET
+          ${project.name !== undefined ? "name = ?," : ""}
+          ${project.status !== undefined ? "status = ?," : ""}
+        WHERE projectId = ?
+      `;
+      const values = [
+        ...(project.name !== undefined ? [project.name] : []),
+        ...(project.status !== undefined ? [project.status] : []),
+        project.projectId,
+      ];
+
       dbConnection.query(updateQuery, values, (error, infoResults) => {
         if (error) {
           reject(error);

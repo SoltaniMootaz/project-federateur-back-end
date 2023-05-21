@@ -2,7 +2,7 @@ export class GetTaskMemberController {
     constructor(getTaskMemberUseCase) {
         this.getTaskMemberUseCase = getTaskMemberUseCase;
         this.getTaskMember = async (req, res) => {
-            const taskId = req.params.id;
+            const { taskId } = req.params;
             // Validate taskId if needed
             const taskMember = await this.getTaskMemberUseCase.getTaskMember(taskId);
             if (taskMember) {

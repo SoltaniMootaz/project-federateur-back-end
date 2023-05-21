@@ -6,9 +6,9 @@ export class UpdateTaskController {
   constructor(private updateTaskUseCase: UpdateTaskUseCase) {}
 
   updateTask = async (req: Request, res: Response): Promise<void> => {
+    const { taskId } = req.params;
     const task = req.body as Task;
-
-    // Validate task properties if needed
+    task.taskId = taskId;
 
     await this.updateTaskUseCase.updateTask(task);
 

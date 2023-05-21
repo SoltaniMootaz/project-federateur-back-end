@@ -1,7 +1,6 @@
 import { Request, Response } from "express";
 import { isEmpty, isMaxLength } from "../../../Validations/validators.js";
 import { Project } from "../../../entities/project.js";
-import { CreateProjectUseCase } from "../../../use-cases/project/createProjectUseCase.js";
 import { UpdateProjectUseCase } from "../../../use-cases/project/updateProjectUseCase.js";
 
 export class UpdateProjectController {
@@ -9,7 +8,9 @@ export class UpdateProjectController {
 
   // Validate request body using validation functions
   update = async (req: Request, res: Response): Promise<void> => {
-    const project = req.body as Project;
+    const { projectId } = req.params;
+    const project = req.body;
+    project.projectId = projectId;
 
     if (isEmpty(project.name) || isEmpty(project.status)) {
       res.status(400).json({ error: "All fields are required" });

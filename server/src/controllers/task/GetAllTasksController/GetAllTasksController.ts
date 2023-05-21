@@ -10,4 +10,13 @@ export class GetAllTasksController {
 
     res.status(200).json(tasks);
   };
+
+  getTasksByProjectId = async (req: Request, res: Response): Promise<void> => {
+    const { projectId } = req.params;
+    const tasks: Task[] = await this.getAllTasksUseCase.getTasksByProjectId(
+      projectId
+    );
+
+    res.status(200).json(tasks);
+  };
 }

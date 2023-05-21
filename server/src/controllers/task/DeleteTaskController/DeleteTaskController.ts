@@ -5,8 +5,7 @@ export class DeleteTaskController {
   constructor(private deleteTaskUseCase: DeleteTaskUseCase) {}
 
   deleteTask = async (req: Request, res: Response): Promise<void> => {
-    const taskId = req.params.id;
-
+    const { taskId } = req.params;
     // Validate taskId if needed
 
     await this.deleteTaskUseCase.deleteTask(taskId);

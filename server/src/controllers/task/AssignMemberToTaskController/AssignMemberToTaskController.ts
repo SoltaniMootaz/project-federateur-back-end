@@ -5,7 +5,8 @@ export class AssignMemberToTaskController {
   constructor(private assignMemberToTaskUseCase: AssignMemberToTaskUseCase) {}
 
   assignMemberToTask = async (req: Request, res: Response): Promise<void> => {
-    const { taskId, userId } = req.body;
+    const { taskId } = req.params;
+    const { userId } = req.body;
 
     // Validate parameters if needed
 

@@ -20,13 +20,16 @@ router.post(
 router.post("/tasks", CreateNewTaskController.createNewTask);
 
 // Update task
-router.put("/tasks/update/:taskId", UpdateTaskController.updateTask);
+router.post("/tasks/update/:taskId", UpdateTaskController.updateTask);
 
 // Delete task
-router.put("/tasks/delete/:taskId", DeleteTaskController.deleteTask);
+router.delete("/tasks/delete/:taskId", DeleteTaskController.deleteTask);
 
 // Get all tasks
 router.get("/tasks", GetAllTasksController.getAllTasks);
+
+// Get all tasks
+router.get("/:projectId/tasks", GetAllTasksController.getTasksByProjectId);
 
 // Get task by ID
 router.get("/tasks/:taskId", GetTaskByIdController.getTaskById);

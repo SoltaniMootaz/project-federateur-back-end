@@ -6,7 +6,7 @@ export class GetTaskMemberController {
   constructor(private getTaskMemberUseCase: GetTaskMemberUseCase) {}
 
   getTaskMember = async (req: Request, res: Response): Promise<void> => {
-    const taskId = req.params.id;
+    const { taskId } = req.params;
 
     // Validate taskId if needed
 

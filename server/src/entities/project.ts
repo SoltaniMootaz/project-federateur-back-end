@@ -4,6 +4,7 @@ export class Project implements IProject {
   constructor(
     public projectId: number,
     public name: string,
-    public status: string
+    public status: string,
+    public teamMembers?: number
   ) {}
 }

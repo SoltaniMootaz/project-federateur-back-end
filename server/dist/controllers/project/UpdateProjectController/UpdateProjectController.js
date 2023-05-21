@@ -4,7 +4,9 @@ export class UpdateProjectController {
         this.updateProjectUseCase = updateProjectUseCase;
         // Validate request body using validation functions
         this.update = async (req, res) => {
+            const { projectId } = req.params;
             const project = req.body;
+            project.projectId = projectId;
             if (isEmpty(project.name) || isEmpty(project.status)) {
                 res.status(400).json({ error: "All fields are required" });
                 return;
