@@ -1,5 +1,4 @@
 import { Request, Response } from "express";
-import { GetProjectByIdUseCase } from "../../../use-cases/project/getProjectByIdUseCase.js";
 import { GetTeamAssignedToProjectUseCase } from "../../../use-cases/project/getTeamAssignedToProjectUseCase.js";
 
 export class GetTeamAssignedToProjectController {

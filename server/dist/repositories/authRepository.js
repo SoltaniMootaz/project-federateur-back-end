@@ -1,13 +1,11 @@
 import dbConnection from "../db-connection/db.js";
-import bcrypt from "bcrypt";
 export class AuthRepository {
     async createUser(user) {
-        const hashedPassword = await bcrypt.hash(user.password, 10);
         const query = "INSERT INTO users (userId, email, password, fullName, phoneNumber, companyId) VALUES (?, ?, ?, ?, ?, ?)";
         const values = [
             user.userId,
             user.email,
-            hashedPassword,
+            user.password,
             user.fullName,
             user.phoneNumber,
             user.companyId,

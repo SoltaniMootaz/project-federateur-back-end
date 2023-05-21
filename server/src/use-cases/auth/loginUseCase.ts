@@ -1,6 +1,6 @@
 import User from "../../entities/user.js";
 import { AuthRepository } from "../../repositories/authRepository.js";
-import bcrypt from "bcrypt";
+import argon2 from "argon2";
 
 export class LoginUseCase {
   private authRepository: AuthRepository;
@@ -16,10 +16,7 @@ export class LoginUseCase {
       return null;
     }
 
-    const isPasswordValid = await bcrypt.compare(
-      password.trim(),
-      user.password
-    );
+    const isPasswordValid = await argon2.verify(user.password, password.trim());
 
     if (isPasswordValid) {
       return user;

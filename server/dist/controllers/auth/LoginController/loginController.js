@@ -4,7 +4,6 @@ export class LoginController {
         this.loginUseCase = loginUseCase;
         this.login = async (req, res) => {
             // Validate request body using validation functions
-            console.log(this.loginUseCase);
             const { email, password } = req.body;
             if (isEmpty(email) || isEmpty(password)) {
                 res.status(400).json({ error: "Email and password are required" });

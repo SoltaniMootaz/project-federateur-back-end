@@ -1,4 +1,4 @@
-import bcrypt from "bcrypt";
+import argon2 from "argon2";
 export class LoginUseCase {
     constructor(userRepository) {
         this.authRepository = userRepository;
@@ -8,7 +8,7 @@ export class LoginUseCase {
         if (!user) {
             return null;
         }
-        const isPasswordValid = await bcrypt.compare(password.trim(), user.password);
+        const isPasswordValid = await argon2.verify(user.password, password.trim());
         if (isPasswordValid) {
             return user;
         }

@@ -1,6 +1,4 @@
 import express from "express";
-import GetCompanyByUserIdController from "../controllers/company/GetCompanyByUserIdController/index.js";
-import GetAllCampaniesController from "../controllers/company/GetAllCompaniesController/index.js";
 import GetProjectByIdController from "../controllers/project/GetProjectByIdController/index.js";
 import GetAllProjectsController from "../controllers/project/GetAllProjectsController/index.js";
 import CreateProjectController from "../controllers/project/CreateProjectController/index.js";
@@ -17,6 +15,7 @@ router.get(
   GetTeamAssignedToProjectController.findTeam
 );
 router.post("/projects/", CreateProjectController.create);
-router.delete("/projects", DeleteProjectController.delete);
-router.patch("/projects", UpdateProjectController.update);
+router.put("/projects/delete/:projectId", DeleteProjectController.delete);
+router.put("/projects/update/:projectId", UpdateProjectController.update);
+
 export default router;

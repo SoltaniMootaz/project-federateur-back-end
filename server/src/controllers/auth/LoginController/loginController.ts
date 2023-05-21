@@ -7,7 +7,6 @@ export class LoginController {
 
   login = async (req: Request, res: Response): Promise<void> => {
     // Validate request body using validation functions
-    console.log(this.loginUseCase);
 
     const { email, password } = req.body;
 

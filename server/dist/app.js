@@ -5,6 +5,7 @@ import userRoutes from "./routes/userRoutes.js";
 import bodyParser from "body-parser";
 import companyRoutes from "./routes/companyRoutes.js";
 import projectRoutes from "./routes/projectRoutes.js";
+import taskRoutes from "./routes/taskRoutes.js";
 const app = express();
 app.use(cors());
 app.use(cors({
@@ -15,6 +16,7 @@ app.use("/user", userRoutes);
 app.use("/auth", authRoutes);
 app.use("/company", companyRoutes);
 app.use("/project", projectRoutes);
+app.use("/task", taskRoutes);
 const port = 3000;
 app.listen(port, () => {
     console.log(`Server running on port http://localhost:${port}`);

@@ -11,7 +11,7 @@ router.get("/projects/:projectId", GetProjectByIdController.findById);
 router.get("/projects", GetAllProjectsController.findAll);
 router.get("/projects/team/:projectId", GetTeamAssignedToProjectController.findTeam);
 router.post("/projects/", CreateProjectController.create);
-router.delete("/projects", DeleteProjectController.delete);
-router.patch("/projects", UpdateProjectController.update);
+router.put("/projects/delete/:projectId", DeleteProjectController.delete);
+router.put("/projects/update/:projectId", UpdateProjectController.update);
 export default router;
 //# sourceMappingURL=projectRoutes.js.map
