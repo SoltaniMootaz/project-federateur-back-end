@@ -24,23 +24,26 @@ export class ProjectRepository {
         });
     }
     async getTeamByProjectId(projectId) {
+        console.log(projectId);
         return new Promise((resolve, reject) => {
             const teamQuery = `
         SELECT u.*, 
-               CASE
-                 WHEN pm.userId IS NOT NULL THEN 'project manager'
-                 ELSE tm.role
-               END AS role
-        FROM users u
-        LEFT JOIN projectManagers pm ON u.userId = pm.userId AND pm.projectId = ?
-        LEFT JOIN teamMembers tm ON u.userId = tm.userId AND tm.projectId = ?
-        WHERE tm.userId IS NOT NULL OR pm.userId IS NOT NULL
+            CASE
+                WHEN pm.userId IS NOT NULL THEN 'project manager'
+                ELSE tm.role
+            END AS role
+        FROM projectteam pt
+        JOIN users u ON pt.userId = u.userId
+        LEFT JOIN projectManagers pm ON u.userId = pm.userId 
+        LEFT JOIN teamMembers tm ON u.userId = tm.userId 
+        WHERE pt.projectId = ?
       `;
-            dbConnection.query(teamQuery, [projectId, projectId], (error, teamResults) => {
+            dbConnection.query(teamQuery, [projectId], (error, teamResults) => {
                 if (error) {
                     reject(error);
                 }
                 else {
+                    console.log(teamResults);
                     const users = teamResults.map((row) => new user(row.userId, row.email, row.password, row.fullName, row.phoneNumber, row.companyId, row.role));
                     resolve(users);
                 }

@@ -20,10 +20,10 @@ router.post(
 router.post("/tasks", CreateNewTaskController.createNewTask);
 
 // Update task
-router.patch("/tasks/:taskId", UpdateTaskController.updateTask);
+router.put("/tasks/update/:taskId", UpdateTaskController.updateTask);
 
 // Delete task
-router.delete("/tasks/:taskId", DeleteTaskController.deleteTask);
+router.put("/tasks/delete/:taskId", DeleteTaskController.deleteTask);
 
 // Get all tasks
 router.get("/tasks", GetAllTasksController.getAllTasks);
@@ -32,7 +32,7 @@ router.get("/tasks", GetAllTasksController.getAllTasks);
 router.get("/tasks/:taskId", GetTaskByIdController.getTaskById);
 
 // Assign member to task
-router.patch(
+router.post(
   "/tasks/:taskId/assign-member",
   AssignMemberToTaskController.assignMemberToTask
 );

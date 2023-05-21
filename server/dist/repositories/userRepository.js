@@ -1,4 +1,5 @@
 import dbConnection from "../db-connection/db.js";
+import user from "../entities/user.js";
 export class UserRepository {
     async getUserProfile(userId) {
         return new Promise((resolve, reject) => {
@@ -52,6 +53,51 @@ export class UserRepository {
                             resolve(profileDto);
                         }
                     });
+                }
+            });
+        });
+    }
+    async getAllUsers() {
+        return new Promise((resolve, reject) => {
+            const infoQuery = `
+        SELECT u.*, 
+            CASE
+                WHEN pm.userId IS NOT NULL THEN 'project manager'
+                ELSE tm.role
+            END AS role
+        FROM users u 
+        LEFT JOIN projectManagers pm ON u.userId = pm.userId 
+        LEFT JOIN teamMembers tm ON u.userId = tm.userId
+      `;
+            dbConnection.query(infoQuery, async (error, infoResults) => {
+                if (error) {
+                    reject(error);
+                }
+                else {
+                    const users = infoResults.map((row) => {
+                        const u = new user(row.userId, row.email, row.password, row.fullName, row.phoneNumber, row.companyId, row.role);
+                        return u;
+                    });
+                    for (const u of users) {
+                        const countQuery = `
+              SELECT COUNT(*) AS assignedProjects
+              FROM projectteam
+              WHERE userId = ?
+            `;
+                        const countResults = await new Promise((countResolve, countReject) => {
+                            dbConnection.query(countQuery, [u.userId], (countError, countRows) => {
+                                if (countError) {
+                                    countReject(countError);
+                                }
+                                else {
+                                    const assignedProjects = countRows[0].assignedProjects;
+                                    countResolve(assignedProjects);
+                                }
+                            });
+                        });
+                        u.assignedProjects = countResults;
+                    }
+                    resolve(users);
                 }
             });
         });
