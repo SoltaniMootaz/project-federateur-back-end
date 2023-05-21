@@ -47,19 +47,37 @@ export class TaskRepository {
     }
     async updateTask(task) {
         return new Promise((resolve, reject) => {
+            const updateClauses = [];
+            if (task.userId !== undefined) {
+                updateClauses.push(`userId = ${task.userId}`);
+            }
+            if (task.projectId !== undefined) {
+                updateClauses.push(`projectId = ${task.projectId}`);
+            }
+            if (task.title !== undefined) {
+                updateClauses.push(`title = '${task.title}'`);
+            }
+            if (task.description !== undefined) {
+                updateClauses.push(`description = '${task.description}'`);
+            }
+            if (task.taskPoints !== undefined) {
+                updateClauses.push(`taskPoints = ${task.taskPoints}`);
+            }
+            if (task.priority !== undefined) {
+                updateClauses.push(`priority = ${task.priority}`);
+            }
+            if (task.type !== undefined) {
+                updateClauses.push(`type = '${task.type}'`);
+            }
+            if (task.status !== undefined) {
+                updateClauses.push(`status = ${task.status}`);
+            }
             const updateQuery = `
-      UPDATE tasks
-      SET
-        ${task.userId !== undefined ? "userId = ?," : ""}
-        ${task.projectId !== undefined ? "projectId = ?," : ""}
-        ${task.title !== undefined ? "title = ?," : ""}
-        ${task.description !== undefined ? "description = ?," : ""}
-        ${task.taskPoints !== undefined ? "taskPoints = ?," : ""}
-        ${task.priority !== undefined ? "priority = ?," : ""}
-        ${task.type !== undefined ? "type = ?," : ""}
-        ${task.status !== undefined ? "status = ?," : ""}
-      taskId = ?
-    `;
+        UPDATE tasks
+        SET
+          ${updateClauses.join(",\n    ")}
+        WHERE taskId = ${task.taskId};
+      `;
             const values = [
                 ...(task.userId !== undefined ? [task.userId] : []),
                 ...(task.projectId !== undefined ? [task.projectId] : []),

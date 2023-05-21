@@ -82,12 +82,21 @@ export class ProjectRepository {
   }
   async updateProject(project: Project): Promise<Project> {
     return new Promise<Project>((resolve, reject) => {
+      const updateClauses = [];
+
+      if (project.name !== undefined) {
+        updateClauses.push("name = ?");
+      }
+
+      if (project.status !== undefined) {
+        updateClauses.push("status = ?");
+      }
+
       const updateQuery = `
         UPDATE projects
         SET
-          ${project.name !== undefined ? "name = ?," : ""}
-          ${project.status !== undefined ? "status = ?," : ""}
-        WHERE projectId = ?
+          ${updateClauses.join(",\n    ")}
+        WHERE projectId = ?;
       `;
       const values = [
         ...(project.name !== undefined ? [project.name] : []),
